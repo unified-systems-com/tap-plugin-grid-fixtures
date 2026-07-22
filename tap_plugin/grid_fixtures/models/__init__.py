@@ -11,6 +11,11 @@ Two families, both re-exported here:
   wildcard-target, self-nesting) for exercising the grid's edge-constraint validation.
   They share the same uniform scalar field surface and differ ONLY by their
   `OUTBOUND_EDGES` / `INBOUND_EDGES` declarations.
+- **Field-surface exception** (`ExclusiveField` → `grid_fixtures__exclusive_field`): the
+  single type that BREAKS the uniform surface, carrying `type_exclusive_field` and
+  nothing else does. Being the exception is its testing purpose — it lets a labelless
+  match prove that a node type missing a property is silently skipped rather than an
+  error. Do not "harmonize" its fields with the families above.
 
 See plugins/grid_fixtures/README.md.
 """
@@ -18,6 +23,7 @@ See plugins/grid_fixtures/README.md.
 from tap_plugin.grid_fixtures.models.constrained_source import ConstrainedSource
 from tap_plugin.grid_fixtures.models.constrained_target import ConstrainedTarget
 from tap_plugin.grid_fixtures.models.dual_endpoint import DualEndpoint
+from tap_plugin.grid_fixtures.models.exclusive_field import ExclusiveField
 from tap_plugin.grid_fixtures.models.inbound_blocked import InboundBlocked
 from tap_plugin.grid_fixtures.models.nesting_container import NestingContainer
 from tap_plugin.grid_fixtures.models.outbound_blocked import OutboundBlocked
@@ -33,6 +39,7 @@ __all__ = [
     "ConstrainedSource",
     "ConstrainedTarget",
     "DualEndpoint",
+    "ExclusiveField",
     "InboundBlocked",
     "NestingContainer",
     "OutboundBlocked",

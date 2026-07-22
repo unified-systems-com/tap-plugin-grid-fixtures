@@ -7,9 +7,10 @@ from. It has no corpus, no harness, and no dependencies.
 This is the role `lotr` has historically filled ("test-fixture vocabulary the core
 suites import"); `grid_fixtures` is the neutral version of it, extracted so the
 `gryphon_playground` plugin can become a droppable leaf that merely *depends on* this
-vocabulary. It ships two node families: **query-pattern** nodes (unconstrained, for
-Gryphon executor tests) and **constraint-archetype** nodes (for edge-constraint +
-validation tests) — documented in turn below.
+vocabulary. It ships three node families: **query-pattern** nodes (unconstrained, for
+Gryphon executor tests), **constraint-archetype** nodes (for edge-constraint +
+validation tests), and one deliberate **field-surface exception** — documented in turn
+below.
 
 ## Node types — query-pattern (unconstrained)
 
@@ -75,6 +76,27 @@ plus a parent/child visual-nesting config) so the display/nesting resolvers have
 fixture too. Four types ship kebab-case SVG icons (`constrained-source`,
 `constrained-target`, `dual-endpoint`, `outbound-blocked`); the rest are icon-less
 on purpose (so the no-icon path has a fixture).
+
+## Node type — the field-surface exception
+
+Every type above shares an identical 7-scalar field surface, deliberately, so a
+predicate behaves the same whichever type a scenario targets. Exactly one type breaks
+that on purpose:
+
+| entity type | class | what it exercises |
+|---|---|---|
+| `grid_fixtures__exclusive_field` | `ExclusiveField` | carries `type_exclusive_field`, a data-lane field **no other type declares** — so a labelless `MATCH (n) WHERE n.data.type_exclusive_field = …` must scan this type alone and silently skip every other |
+
+Proving "a node type missing a property is silently non-matching, not an error"
+(`req-grid-traversal-lang-bare-match-3`) requires a field present on exactly one type.
+If *no* type has the field the executor emits no SQL at all and the assertion passes
+vacuously. That is not theoretical: the Gridkin corpus previously borrowed
+`lotr__character.bio` for this, and retiring the `lotr` plugin silently turned the
+scenario into a no-op that still passed. The neutral vocabulary now owns the capability
+rather than borrowing it from a demo plugin that can be deleted.
+
+**Do not "harmonize" this type's fields with the families above** — being the exception
+is its entire testing purpose.
 
 ## Typed / constrained / schema-bearing edge types
 

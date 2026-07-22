@@ -27,6 +27,8 @@ grid_fixtures__outbound_blocked = "tap_plugin.grid_fixtures.models.outbound_bloc
 grid_fixtures__inbound_blocked = "tap_plugin.grid_fixtures.models.inbound_blocked.InboundBlocked"
 grid_fixtures__nesting_container = "tap_plugin.grid_fixtures.models.nesting_container.NestingContainer"
 grid_fixtures__wildcard_referencer = "tap_plugin.grid_fixtures.models.wildcard_referencer.WildcardReferencer"
+# Field-surface exception — the only type declaring `type_exclusive_field`.
+grid_fixtures__exclusive_field = "tap_plugin.grid_fixtures.models.exclusive_field.ExclusiveField"
 
 [edges]
 # Wildcard query-pattern edges (Gryphon executor testing).
