@@ -5,14 +5,12 @@
 # ours and external developers' — runs the SAME admission gate, and improving it is one
 # edit in one place rather than a fan-out across a dozen repos.
 #
-# Two prerequisites, both easy to get wrong and both silent when wrong:
-#
-#  1. The core repo is PRIVATE, so its reusable workflows must be shared:
-#     Settings > Actions > General > Access = "Accessible from repositories owned by
-#     the user 'notgeorge'". Without it every run fails with a workflow-not-found error.
-#  2. `harness_pat` must be a PAT with Contents:Read on notgeorge/tap. The caller's own
-#     GITHUB_TOKEN is scoped to THIS repo and cannot check out core. This is deliberately
-#     NOT the `github-plugins-ro` token, which reads plugin repos and must not read core.
+# Since 2026-08-08 core is PUBLIC on the unified-systems-com org, which removed both of
+# the old silent-failure prerequisites: public reusable workflows are callable from any
+# repo (no Actions access_level sharing needed), and core can be checked out with no
+# credential at all. `harness_pat` is still plumbed through for now — retiring
+# TAP_CORE_RO_PAT is a separate, deliberate step — but a missing/expired value is no
+# longer fatal to checkout.
 #
 # `boot_profile` is intentionally omitted: grid_fixtures is a leaf with no cross-plugin
 # dependencies, so the Django-free conformance job is the whole gate here. Plugins that
@@ -29,7 +27,7 @@ on:
 
 jobs:
   tap:
-    uses: notgeorge/tap/.github/workflows/plugin-ci.yml@main
+    uses: unified-systems-com/tap/.github/workflows/plugin-ci.yml@main
     with:
       plugin_slug: grid_fixtures
       # Pinned deliberately. `main` means "whatever core is today", which turns an
