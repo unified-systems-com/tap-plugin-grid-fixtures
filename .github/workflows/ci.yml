@@ -25,6 +25,10 @@ on:
   # commit landing HERE, and nothing else would re-run this gate.
   workflow_dispatch:
 
+# Explicit least-privilege GITHUB_TOKEN (CodeQL actions/missing-workflow-permissions).
+permissions:
+  contents: read
+
 jobs:
   tap:
     uses: unified-systems-com/tap/.github/workflows/plugin-ci.yml@main
