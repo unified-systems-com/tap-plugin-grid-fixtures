@@ -1,5 +1,6 @@
 manifest_version = "0"
 plugin_version = "0.1.0"
+requires_tap = ">=0.1.5"
 slug = "grid_fixtures"
 name = "Grid Fixtures"
 description = "Neutral core-test node + edge vocabulary — query-pattern nodes (pg_*) plus edge-constraint archetype nodes and typed/constrained edges the core suites import."
